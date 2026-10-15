@@ -14,7 +14,6 @@
             <div class="error"><?= htmlspecialchars($error) ?></div>
         <?php else: ?>
             <form action="index.php" method="post">
-
             </form>
         <?php endif; ?>
     </div>
