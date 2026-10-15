@@ -26,7 +26,15 @@ RUN curl -sS https://getcomposer.org/installer -o composer-setup.php \
 # Habilitar módulos de Apache
 RUN a2enmod rewrite headers expires
 
+# La entrada pública de la aplicación está dentro de src/public.
+RUN sed -i 's#^[[:space:]]*DocumentRoot .*#\tDocumentRoot /var/www/html/src/public#' /etc/apache2/sites-available/000-default.conf \
+    && printf '%s\n' '<Directory /var/www/html/src/public>' '    AllowOverride All' '    Require all granted' '</Directory>' >> /etc/apache2/apache2.conf
+
 WORKDIR /var/www/html
+
+COPY composer.json ./
+COPY src ./src
+RUN composer dump-autoload
 
 EXPOSE 80
 
