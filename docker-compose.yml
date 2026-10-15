@@ -1,0 +1,13 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: imagen-prueba
+    container_name: parcial-prueba
+    restart: always
+    ports:
+      - "8090:80"
+    volumes:
+      - .:/var/www/html
+      - /var/www/html/vendor  # <- Evita conflictos con las dependencias de Composer
